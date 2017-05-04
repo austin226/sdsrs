@@ -1,0 +1,13 @@
+{
+    "name": "austin/sdsrs",
+    "description": "Spoken-Dialog Spaced Repetition System",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Austin Almond",
+            "email": "aust.almond@gmail.com"
+        }
+    ],
+    "require": {}
+}
