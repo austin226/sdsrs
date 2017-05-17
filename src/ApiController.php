@@ -15,6 +15,8 @@ class ApiController
 
     public function listCollections()
     {
-
+        $response = $this->ankiServerClient->post('list_collections');
+        var_dump($response);
+        $collectionList = json_decode($response, true);
     }
 }
