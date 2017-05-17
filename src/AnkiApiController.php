@@ -4,7 +4,7 @@ namespace Austin226\Sdsrs;
 
 use GuzzleHttp\Client;
 
-class ApiController
+class AnkiApiController
 {
     public function __construct($ankiServerUri)
     {
