@@ -3,6 +3,11 @@
     "description": "Spoken-Dialog Spaced Repetition System",
     "type": "project",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Austin226\\Sdsrs\\": "src/"
+        }
+    },
     "authors": [
         {
             "name": "Austin Almond",
