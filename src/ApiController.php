@@ -29,8 +29,11 @@ class ApiController
         if ($actionName == 'list_collections') {
             return $this->listCollections();
         } elseif ($actionName == 'select_collection') {
-            return $this->selectCollection();
+            $collectionName = $this->extractParameter($queryParameters, 'collectionName');
+            $this->selectCollection($collectionName);
         }
+
+        return [];
     }
 
     /**
@@ -60,7 +63,11 @@ class ApiController
         return $this->ankiController->listCollections();
     }
 
-    private function selectCollection() : array
+    /**
+     * Selects a collection, or throws an exception if the collection is not found.
+     */
+    private function selectCollection(string $collectionName) : void
     {
+        $this->ankiController->setCollection($collectionName);
     }
 }
