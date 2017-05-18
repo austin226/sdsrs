@@ -4,7 +4,7 @@ namespace Austin226\Sdsrs;
 
 class JsonPrinter
 {
-    public function sendAsJson($data, $httpStatusCode = 200)
+    public function sendAsJson($data, int $httpStatusCode = 200) : void
     {
         header('Content-Type: application/json');
         http_response_code($httpStatusCode);
