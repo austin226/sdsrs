@@ -30,7 +30,7 @@ class ApiController
 
         $actionName = $queryParameters['action'];
         if ($actionName == 'list_collections') {
-            return $this->listControllers();
+            return $this->listCollections();
         }
     }
 
