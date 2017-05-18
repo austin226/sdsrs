@@ -2,11 +2,13 @@
 
 namespace Austin226\Sdsrs;
 
+use Austin226\Sdsrs\Exceptions\BadRequestException;
+
 class ApiController
 {
     private $ankiController;
 
-    public function __construct($ankiServerUri)
+    public function __construct(string $ankiServerUri)
     {
         $this->ankiController = new AnkiApiController($ankiServerUri);
     }
@@ -15,14 +17,18 @@ class ApiController
      * Performs an action, and returns the result to be
      * sent to the client.
      *
-     * @param string $actionName
-     * @param array $queryParameters
+     * @param array $queryParameters must include 'action'
      *
-     * @return mixed
+     * @return array
+     * @throws HttpException
      */
-    public function doAction($actionName, $queryParameters)
+    public function doAction(array $queryParameters) : array
     {
-        return $queryParameters;
+        if (!isset($queryParameters['action'])) {
+            throw new BadRequestException("No action name specified.");
+        }
+
+        $actionName = $queryParameters['action'];
         if ($actionName == 'list_collections') {
             return $this->listControllers();
         }
@@ -31,7 +37,7 @@ class ApiController
     /**
      * @return list
      */
-    private function listCollections()
+    private function listCollections() : array
     {
         return $this->ankiController->listCollections();
     }
