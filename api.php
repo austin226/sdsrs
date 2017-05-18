@@ -3,7 +3,6 @@
 require 'vendor/autoload.php';
 
 use Austin226\Sdsrs\ApiController;
-use Austin226\Sdsrs\AnkiApiController;
 use Austin226\Sdsrs\JsonPrinter;
 
 $ankiServerUri = 'http://10.0.2.15:3000';
@@ -15,4 +14,5 @@ if (empty($_GET['action'])) {
     exit();
 }
 
-$jsonPrinter->sendAsJson($collectionList);
+$response = $apiController->doAction($_GET['action'], $_GET);
+$jsonPrinter->sendAsJson($response);

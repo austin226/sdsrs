@@ -22,7 +22,8 @@ class ApiController
      */
     public function doAction($actionName, $queryParameters)
     {
-        if ($actionName == 'list_controllers') {
+        return $queryParameters;
+        if ($actionName == 'list_collections') {
             return $this->listControllers();
         }
     }
