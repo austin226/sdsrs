@@ -9,3 +9,5 @@ This is the front-end client, designed for use with [sdsrs-anki-server](https://
 | list_collections  | GET    | api.php?action=list_collections  |                         | 200              |                  |
 | select_collection | POST   | api.php?action=select_collection | {"name": "collection1"} | 200              | 404              |
 | create_collection | POST   | api.php?action=create_collection | {"name": "collection1"} | 201              | 422              |
+| list_decks        | GET    | api.php?action=list_decks        |                         | 200              | 404              |
+| create_deck       | POST   | api.php?action=create_deck       | {"name": "deck1"}       | 201              | 422              |
