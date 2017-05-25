@@ -34,9 +34,9 @@ class ApiController
      */
     public function doAction(string $method, string $action, array $requestData) : array
     {
-
-        $actionName = $this->extractParameter($requestData, 'action');
-
+        if (!in_array($action, self::ACTIONS_LIST)) {
+            throw new BadRequestException("Unknown action: '$action'");
+        }
         if ($actionName == 'list_collections') {
             return $this->listCollections();
         } elseif ($actionName == 'select_collection') {
