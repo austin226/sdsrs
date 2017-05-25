@@ -25,19 +25,22 @@ class ApiController
      * Performs an action, and returns the result to be
      * sent to the client.
      *
-     * @param array $queryParameters must include 'action'
+     * @param string $method HTTP method used
+     * @param string $action action to perform
+     * @param array $requestData
      *
      * @return array
      * @throws \Austin226\Sdsrs\Exceptions\HttpException
      */
-    public function doAction(string $method, array $queryParameters) : array
+    public function doAction(string $method, string $action, array $requestData) : array
     {
-        $actionName = $this->extractParameter($queryParameters, 'action');
+
+        $actionName = $this->extractParameter($requestData, 'action');
 
         if ($actionName == 'list_collections') {
             return $this->listCollections();
         } elseif ($actionName == 'select_collection') {
-            $collectionName = $this->extractParameter($queryParameters, 'collectionName');
+            $collectionName = $this->extractParameter($requestData, 'collectionName');
             $this->selectCollection($collectionName);
         }
 
@@ -48,16 +51,16 @@ class ApiController
      * Extracts a parameter from the list of query parameters,
      * or throws an exception if the parameter is not found.
      *
-     * @param array $queryParameters
+     * @param array $requestData
      * @param string $paramName
      *
      * @return string
      * @throws \Austin226\Sdsrs\Exceptions\HttpException
      */
-    private function extractParameter(array $queryParameters, string $paramName) : string
+    private function extractParameter(array $requestData, string $paramName) : string
     {
-        if (isset($queryParameters[$paramName])) {
-            return $queryParameters[$paramName];
+        if (isset($requestData[$paramName])) {
+            return $requestData[$paramName];
         }
 
         throw new BadRequestException("Parameter '$paramName' is missing.");

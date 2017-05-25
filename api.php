@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 
 use Austin226\Sdsrs\ApiController;
+use Austin226\Sdsrs\Exceptions\BadRequestException;
 use Austin226\Sdsrs\Exceptions\HttpException;
 use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
 use Austin226\Sdsrs\JsonPrinter;
@@ -12,12 +13,18 @@ $apiController = new ApiController($ankiServerUri);
 $jsonPrinter = new JsonPrinter();
 
 try {
+    if (!isset($_REQUEST['action'])) {
+        throw new BadRequestException('You must specify an action.');
+    }
+
+    $action = $_REQUEST['action'];
+
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
-            $response = $apiController->doAction('GET', $_GET);
+            $response = $apiController->doAction('GET', $action, $_GET);
             break;
         case 'POST':
-            $response = $apiController->doAction('POST', $_POST);
+            $response = $apiController->doAction('POST', $action, $_POST);
             break;
         default:
             throw new MethodNotAllowedException("Method not allowed: ".$_SERVER['REQUEST_METHOD']);
