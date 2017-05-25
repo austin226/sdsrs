@@ -3,6 +3,7 @@
 namespace Austin226\Sdsrs;
 
 use Austin226\Sdsrs\Exceptions\BadRequestException;
+use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
 
 class ApiController
 {
@@ -34,8 +35,15 @@ class ApiController
      */
     public function doAction(string $method, string $action, array $requestData) : array
     {
-        if (!in_array($action, self::ACTIONS_LIST)) {
+        if (!isset(self::ACTIONS_LIST[$action])) {
             throw new BadRequestException("Unknown action: '$action'");
+        }
+        $actionInfo = self::ACTIONS_LIST[$action];
+        if ($actionInfo['method'] != $method) {
+            $errMsg = <<<TEXT
+Method {$method} not allowed for action {$action}. Use {$actionInfo['method']}.
+TEXT;
+            throw new MethodNotAllowedException($errMsg);
         }
         if ($actionName == 'list_collections') {
             return $this->listCollections();
