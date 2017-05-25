@@ -45,9 +45,9 @@ Method {$method} not allowed for action {$action}. Use {$actionInfo['method']}.
 TEXT;
             throw new MethodNotAllowedException($errMsg);
         }
-        if ($actionName == 'list_collections') {
+        if ($action == 'list_collections') {
             return $this->listCollections();
-        } elseif ($actionName == 'select_collection') {
+        } elseif ($action == 'select_collection') {
             $collectionName = $this->extractParameter($requestData, 'collectionName');
             $this->selectCollection($collectionName);
         }
