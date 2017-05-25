@@ -7,7 +7,7 @@ This is the front-end client, designed for use with [sdsrs-anki-server](https://
 | action            | method | example URL                      | data                    | success response | failure response |
 |-------------------|--------|----------------------------------|-------------------------|------------------|------------------|
 | list_collections  | GET    | api.php?action=list_collections  |                         | 200              |                  |
-| select_collection | POST   | api.php?action=select_collection | {"name": "collection1"} | 200              | 404              |
 | create_collection | POST   | api.php?action=create_collection | {"name": "collection1"} | 201              | 422              |
-| list_decks        | GET    | api.php?action=list_decks        |                         | 200              | 404              |
-| create_deck       | POST   | api.php?action=create_deck       | {"name": "deck1"}       | 201              | 422              |
+| list_decks        | GET    | api.php?action=list_decks&collection={$collectionName}        |                         | 200              | 404              |
+| create_deck       | POST   | api.php?action=create_deck       | {"collection": "collection1", "name": "deck1"}       | 201              | 422               |
+| add_card          |   POST   |  api.php?action=add_card       | {"collection": "collection1", "deck": "deck1", "front": "front1", "back": "back1"} |
