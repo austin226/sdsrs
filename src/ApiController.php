@@ -8,6 +8,14 @@ class ApiController
 {
     private $ankiController;
 
+    const ACTIONS_LIST = [
+        'list_collections' => [
+            'method' => 'GET',
+            'function' => 'listCollections',
+            'parameters' => []
+        ]
+    ];
+
     public function __construct(string $ankiServerUri)
     {
         $this->ankiController = new AnkiApiController($ankiServerUri);
@@ -22,7 +30,7 @@ class ApiController
      * @return array
      * @throws \Austin226\Sdsrs\Exceptions\HttpException
      */
-    public function doAction(array $queryParameters) : array
+    public function doAction(string $method, array $queryParameters) : array
     {
         $actionName = $this->extractParameter($queryParameters, 'action');
 
