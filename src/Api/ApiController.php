@@ -92,43 +92,4 @@ TEXT;
 
         throw new BadRequestException("Parameter '$paramName' is missing.");
     }
-
-    /**
-     * @return list
-     */
-    private function listCollections() : array
-    {
-        return $this->ankiController->listCollections();
-    }
-
-    private function listDecks(string $collectionName) : array
-    {
-        // TODO
-        return $this->ankiController->listDecks($collectionName);
-    }
-
-    private function createDeck(string $collectionName, string $deckName) : boolean
-    {
-        // TODO
-    }
-
-    private function addCard(
-        string $collectionName,
-        string $front,
-        string $back
-    ) : boolean {
-        $this->ankiController->addCard($collectionName, $front, $back);
-        return true;
-    }
-
-    private function nextCard() : array
-    {
-        // TODO
-        // return text with metadata
-    }
-
-    private function answerCard(string $answer) : boolean
-    {
-        // TODO
-    }
 }
