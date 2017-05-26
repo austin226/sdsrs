@@ -40,7 +40,7 @@ class AnkiApiController
     {
 
         $url = "collection/{$collectionName}/list_decks";
-        $response = $this->ankiServerClient->request('POST', $url, ['json' => []]);
+        $response = $this->ankiServerClient->post($url, ['json' => []]);
         $responseBody = $response->getBody();
         $deckList = json_decode($responseBody, true);
         return $deckList;
