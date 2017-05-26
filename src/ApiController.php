@@ -96,14 +96,10 @@ TEXT;
         return $this->ankiController->listCollections();
     }
 
-    private function createCollection(string $collectionName) : boolean
-    {
-        // TODO
-    }
-
     private function listDecks(string $collectionName) : array
     {
         // TODO
+        return $this->ankiController->listDecks($collectionName);
     }
 
     private function createDeck(string $collectionName, string $deckName) : boolean

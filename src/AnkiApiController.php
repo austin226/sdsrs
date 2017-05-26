@@ -29,18 +29,7 @@ class AnkiApiController
         return $collectionList;
     }
 
-    /**
-     * Sets the internal collection name.
-     *
-     * @param string $collection
-     *
-     * @throws \Austin226\Sdsrs\Exceptions\ResourceNotFoundException if collection not found
-     */
-    public function setCollection(string $collection) : void
+    public function listDecks(string $collectionName) : array
     {
-        $validCollections = $this->listCollections();
-        if (!in_array($collection, $validCollections)) {
-            throw new ResourceNotFoundException("Not a valid collection: '$collection'");
-        }
     }
 }
