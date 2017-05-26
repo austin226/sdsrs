@@ -15,6 +15,8 @@ interface AnkiApiControllerInterface
      * Lists all decks in a collection. Throws a ResourceNotFoundException
      * if collection is not found.
      *
+     * @param string $collectionName
+     *
      * @return array
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
@@ -24,10 +26,12 @@ interface AnkiApiControllerInterface
      * Creates a card with the given front and back content. Returns
      * the ID of the new card.
      *
+     * @param string $collectionName
      * @param string $front
      * @param string $back
      *
      * @return int
+     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
-    public function addCard(string $front, string $back) : int;
+    public function addCard(string $collectionName, string $front, string $back) : int;
 }

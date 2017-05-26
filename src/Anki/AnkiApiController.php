@@ -41,7 +41,12 @@ class AnkiApiController implements AnkiApiControllerInterface
         return $deckList;
     }
 
-    public function addCard(string $front, string $back) : int
+    public function addCard(string $collectionName, string $front, string $back) : int
     {
+    }
+
+    private function findAllNotes(string $collectionName) : array
+    {
+        $url = "collection/
     }
 }

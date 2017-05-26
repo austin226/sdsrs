@@ -27,6 +27,7 @@ class ApiController implements ApiControllerInterface
             'method' => 'POST',
             'function' => 'addCard',
             'parameters' => [
+                'collection',
                 'front',
                 'back'
             ]
@@ -112,10 +113,11 @@ TEXT;
     }
 
     private function addCard(
+        string $collectionName,
         string $front,
         string $back
     ) : boolean {
-        $this->ankiController->addCard($front, $back);
+        $this->ankiController->addCard($collectionName, $front, $back);
         return true;
     }
 
