@@ -22,6 +22,14 @@ class ApiController implements ApiControllerInterface
             'parameters' => [
                 'collection'
             ]
+        ],
+        'create_card' => [
+            'method' => 'POST',
+            'function' => 'createCard',
+            'parameters' => [
+                'front',
+                'back'
+            ]
         ]
         // TODO others
     ];
