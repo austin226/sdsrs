@@ -1,8 +1,8 @@
 <?php
 
-namespace Austin226\Sdsrs\Anki;
+namespace Aalmond\Sdsrs\Anki;
 
-use Austin226\Sdsrs\Exceptions\ResourceNotFoundException;
+use Aalmond\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;
 
 class AnkiApiController
@@ -34,7 +34,7 @@ class AnkiApiController
      * if collection is not found.
      *
      * @return array
-     * @throws \Austin226\Sdsrs\Exceptions\ResourceNotFoundException
+     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function listDecks(string $collectionName) : array
     {

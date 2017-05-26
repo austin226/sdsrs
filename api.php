@@ -2,11 +2,11 @@
 
 require 'vendor/autoload.php';
 
-use Austin226\Sdsrs\ApiController;
-use Austin226\Sdsrs\Exceptions\BadRequestException;
-use Austin226\Sdsrs\Exceptions\HttpException;
-use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
-use Austin226\Sdsrs\JsonPrinter;
+use Aalmond\Sdsrs\ApiController;
+use Aalmond\Sdsrs\Exceptions\BadRequestException;
+use Aalmond\Sdsrs\Exceptions\HttpException;
+use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
+use Aalmond\Sdsrs\JsonPrinter;
 
 $ankiServerUri = 'http://10.0.2.15:3000';
 $apiController = new ApiController($ankiServerUri);

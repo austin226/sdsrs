@@ -1,10 +1,10 @@
 <?php
 
-namespace Austin226\Sdsrs\Api;
+namespace Aalmond\Sdsrs\Api;
 
-use Austin226\Sdsrs\Anki\AnkiApiController;
-use Austin226\Sdsrs\Exceptions\BadRequestException;
-use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
+use Aalmond\Sdsrs\Anki\AnkiApiController;
+use Aalmond\Sdsrs\Exceptions\BadRequestException;
+use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 
 class ApiController
 {
@@ -41,7 +41,7 @@ class ApiController
      * @param array $requestData
      *
      * @return array
-     * @throws \Austin226\Sdsrs\Exceptions\HttpException
+     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
      */
     public function doAction(string $method, string $action, array $requestData) : array
     {
@@ -64,7 +64,7 @@ class ApiController
     /**
      * Checks that we are using the right method for the action.
      *
-     * @throws \Austin226\Sdsrs\Exceptions\MethodNotAllowedException
+     * @throws \Aalmond\Sdsrs\Exceptions\MethodNotAllowedException
      */
     private function validateMethod(string $method, string $action) : void
     {
@@ -85,7 +85,7 @@ TEXT;
      * @param string $paramName
      *
      * @return string
-     * @throws \Austin226\Sdsrs\Exceptions\HttpException
+     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
      */
     private function extractParameter(array $requestData, string $paramName) : string
     {

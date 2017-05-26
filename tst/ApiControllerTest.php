@@ -1,10 +1,10 @@
 <?php
 
-namespace Austin226\Sdsrs\tst;
+namespace Aalmond\Sdsrs\tst;
 
-use Austin226\Sdsrs\Api\ApiController;
-use Austin226\Sdsrs\Exceptions\BadRequestException;
-use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
+use Aalmond\Sdsrs\Api\ApiController;
+use Aalmond\Sdsrs\Exceptions\BadRequestException;
+use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 use PHPUnit\Framework\TestCase;
 
 class ApiControllerTest extends TestCase

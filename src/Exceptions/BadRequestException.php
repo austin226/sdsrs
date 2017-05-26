@@ -1,6 +1,6 @@
 <?php
 
-namespace Austin226\Sdsrs\Exceptions;
+namespace Aalmond\Sdsrs\Exceptions;
 
 class BadRequestException extends HttpException
 {
