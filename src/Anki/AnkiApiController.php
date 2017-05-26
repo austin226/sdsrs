@@ -43,10 +43,12 @@ class AnkiApiController implements AnkiApiControllerInterface
 
     public function addCard(string $collectionName, string $front, string $back) : int
     {
+        // TODO
     }
 
     private function findAllNotes(string $collectionName) : array
     {
-        $url = "collection/
+        $url = "collection/";
+        // TODO
     }
 }

@@ -46,16 +46,17 @@ class ApiController implements ApiControllerInterface
             throw new BadRequestException("Unknown action: '$action'");
         }
 
-        $this->validateMethod($method, $action);
+        $actionInfo = self::ACTIONS_LIST[$action];
 
-        if ($action == 'list_collections') {
-            return $this->listCollections();
-        } elseif ($action == 'list_decks') {
-            $collectionName = $this->extractParameter($requestData, 'collection');
-            return $this->listDecks($collectionName);
+        $this->validateMethod($method, $action, $actionInfo);
+
+        $functionName = $actionInfo['function'];
+        $functionParameters = [];
+        foreach ($actionInfo['parameters'] as $paramName) {
+            $functionParameters[] = $this->extractParameter($requestData, $paramName);
         }
 
-        return [];
+        return call_user_func_array([$this->ankiController, $functionName], $functionParameters);
     }
 
     /**
@@ -63,9 +64,8 @@ class ApiController implements ApiControllerInterface
      *
      * @throws \Aalmond\Sdsrs\Exceptions\MethodNotAllowedException
      */
-    private function validateMethod(string $method, string $action) : void
+    private function validateMethod(string $method, string $action, array $actionInfo) : void
     {
-        $actionInfo = self::ACTIONS_LIST[$action];
         if ($actionInfo['method'] != $method) {
             $errMsg = <<<TEXT
 Method {$method} not allowed for action {$action}. Use {$actionInfo['method']}.
