@@ -9,7 +9,8 @@ use Aalmond\Sdsrs\Exceptions\HttpException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 use Aalmond\Sdsrs\JsonPrinter;
 
-$ankiServerUri = 'http://10.0.2.15:3000';
+$config = json_decode(file_get_contents('api_config.json'), true);
+$ankiServerUri = $config['uri'];
 $ankiApiController = new AnkiApiController($ankiServerUri);
 $apiController = new ApiController($ankiApiController);
 $jsonPrinter = new JsonPrinter();
