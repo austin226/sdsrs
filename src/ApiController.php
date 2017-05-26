@@ -38,13 +38,9 @@ class ApiController
         if (!isset(self::ACTIONS_LIST[$action])) {
             throw new BadRequestException("Unknown action: '$action'");
         }
-        $actionInfo = self::ACTIONS_LIST[$action];
-        if ($actionInfo['method'] != $method) {
-            $errMsg = <<<TEXT
-Method {$method} not allowed for action {$action}. Use {$actionInfo['method']}.
-TEXT;
-            throw new MethodNotAllowedException($errMsg);
-        }
+
+        $this->validateMethod($method, $action);
+
         if ($action == 'list_collections') {
             return $this->listCollections();
         } elseif ($action == 'select_collection') {
@@ -53,6 +49,22 @@ TEXT;
         }
 
         return [];
+    }
+
+    /**
+     * Checks that we are using the right method for the action.
+     *
+     * @throws \Austin226\Sdsrs\Exceptions\MethodNotAllowedException
+     */
+    private function validateMethod(string $method, string $action) : void
+    {
+        $actionInfo = self::ACTIONS_LIST[$action];
+        if ($actionInfo['method'] != $method) {
+            $errMsg = <<<TEXT
+Method {$method} not allowed for action {$action}. Use {$actionInfo['method']}.
+TEXT;
+            throw new MethodNotAllowedException($errMsg);
+        }
     }
 
     /**
