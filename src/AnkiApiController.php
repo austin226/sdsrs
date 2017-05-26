@@ -43,10 +43,13 @@ class AnkiApiController
         $responseBody = $response->getBody();
         $deckDataArray = json_decode($responseBody, true);
 
-        $deckNames = [];
+        $deckList = [];
         foreach ($deckDataArray as $deckData) {
-            $deckNames[] = $deckData['name'];
+            $deckList[] = [
+                'id' => $deckData['id'],
+                'name' => $deckData['name']
+            ];
         }
-        return $deckNames;
+        return $deckList;
     }
 }
