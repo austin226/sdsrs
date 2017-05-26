@@ -2,6 +2,7 @@
 
 namespace Aalmond\Sdsrs\tst;
 
+use Aalmond\Sdsrs\Anki\AnkiApiController;
 use Aalmond\Sdsrs\Api\ApiController;
 use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
@@ -13,7 +14,8 @@ class ApiControllerTest extends TestCase
 
     public function setUp()
     {
-        $this->apiController = new ApiController('');
+        $ankiController = new AnkiApiController('');
+        $this->apiController = new ApiController($ankiController);
     }
 
     public function testBadMethod()

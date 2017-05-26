@@ -2,7 +2,7 @@
 
 namespace Aalmond\Sdsrs\Api;
 
-use Aalmond\Sdsrs\Anki\AnkiApiController;
+use Aalmond\Sdsrs\Anki\AnkiApiControllerInterface;
 use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 
@@ -31,17 +31,6 @@ class ApiController implements ApiControllerInterface
         $this->ankiController = $ankiController;
     }
 
-    /**
-     * Performs an action, and returns the result to be
-     * sent to the client.
-     *
-     * @param string $method HTTP method used
-     * @param string $action action to perform
-     * @param array $requestData
-     *
-     * @return array
-     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
-     */
     public function doAction(string $method, string $action, array $requestData) : array
     {
         if (!isset(self::ACTIONS_LIST[$action])) {
