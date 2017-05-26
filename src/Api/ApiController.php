@@ -23,9 +23,9 @@ class ApiController implements ApiControllerInterface
                 'collection'
             ]
         ],
-        'create_card' => [
+        'add_card' => [
             'method' => 'POST',
-            'function' => 'createCard',
+            'function' => 'addCard',
             'parameters' => [
                 'front',
                 'back'
@@ -112,14 +112,11 @@ TEXT;
     }
 
     private function addCard(
-        string $collectionName,
-        string $deckName,
         string $front,
-        string $back,
-        array $metadata
+        string $back
     ) : boolean {
-        // TODO
-        // return new card UUID?
+        $this->ankiController->addCard($front, $back);
+        return true;
     }
 
     private function nextCard() : array

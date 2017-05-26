@@ -40,4 +40,8 @@ class AnkiApiController implements AnkiApiControllerInterface
         }
         return $deckList;
     }
+
+    public function addCard(string $front, string $back) : int
+    {
+    }
 }
