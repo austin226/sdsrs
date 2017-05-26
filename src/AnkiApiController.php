@@ -29,7 +29,18 @@ class AnkiApiController
         return $collectionList;
     }
 
+    /**
+     * Lists all decks in a collection. Throws a ResourceNotFoundException
+     * if collection is not found.
+     *
+     * @return array
+     * @throws \Austin226\Sdsrs\Exceptions\ResourceNotFoundException
+     */
     public function listDecks(string $collectionName) : array
     {
+        $url = "/collection/{$collectionName}/list_decks";
+        $response = $this->ankiServerClient->get($url);
+        $deckList = json_decode($responseBody, true);
+        return $collectionList;
     }
 }
