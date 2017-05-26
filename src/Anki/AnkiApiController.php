@@ -1,6 +1,6 @@
 <?php
 
-namespace Austin226\Sdsrs;
+namespace Austin226\Sdsrs\Anki;
 
 use Austin226\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;

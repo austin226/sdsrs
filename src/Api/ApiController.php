@@ -1,7 +1,8 @@
 <?php
 
-namespace Austin226\Sdsrs;
+namespace Austin226\Sdsrs\Api;
 
+use Austin226\Sdsrs\Anki\AnkiApiController;
 use Austin226\Sdsrs\Exceptions\BadRequestException;
 use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
 

@@ -2,7 +2,7 @@
 
 namespace Austin226\Sdsrs\tst;
 
-use Austin226\Sdsrs\ApiController;
+use Austin226\Sdsrs\Api\ApiController;
 use Austin226\Sdsrs\Exceptions\BadRequestException;
 use Austin226\Sdsrs\Exceptions\MethodNotAllowedException;
 use PHPUnit\Framework\TestCase;
