@@ -6,7 +6,7 @@ use Aalmond\Sdsrs\Anki\AnkiApiController;
 use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 
-class ApiController
+class ApiController implements ApiControllerInterface
 {
     private $ankiController;
 

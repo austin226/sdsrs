@@ -5,7 +5,7 @@ namespace Aalmond\Sdsrs\Anki;
 use Aalmond\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;
 
-class AnkiApiController
+class AnkiApiController implements AnkiApiControllerInterface
 {
     private $ankiServerClient;
 
