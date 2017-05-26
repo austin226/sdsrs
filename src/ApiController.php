@@ -94,12 +94,4 @@ TEXT;
     {
         return $this->ankiController->listCollections();
     }
-
-    /**
-     * Selects a collection, or throws an exception if the collection is not found.
-     */
-    private function selectCollection(string $collectionName) : void
-    {
-        $this->ankiController->setCollection($collectionName);
-    }
 }
