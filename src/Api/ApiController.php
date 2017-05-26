@@ -26,10 +26,9 @@ class ApiController implements ApiControllerInterface
         // TODO others
     ];
 
-    public function __construct(string $ankiServerUri)
+    public function __construct(AnkiApiControllerInterface $ankiController)
     {
-        // TODO accept an interface so we can mock the AnkiApiController
-        $this->ankiController = new AnkiApiController($ankiServerUri);
+        $this->ankiController = $ankiController;
     }
 
     /**
