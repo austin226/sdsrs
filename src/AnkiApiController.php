@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 
 class AnkiApiController
 {
+    private $ankiServerClient;
+
     public function __construct(string $ankiServerUri)
     {
         $this->ankiServerClient = new Client([

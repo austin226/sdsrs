@@ -19,6 +19,7 @@ class ApiController
 
     public function __construct(string $ankiServerUri)
     {
+        // TODO accept an interface so we can mock the AnkiApiController
         $this->ankiController = new AnkiApiController($ankiServerUri);
     }
 
