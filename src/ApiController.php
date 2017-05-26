@@ -15,6 +15,7 @@ class ApiController
             'function' => 'listCollections',
             'parameters' => []
         ]
+        // TODO others
     ];
 
     public function __construct(string $ankiServerUri)
@@ -93,5 +94,42 @@ TEXT;
     private function listCollections() : array
     {
         return $this->ankiController->listCollections();
+    }
+
+    private function createCollection(string $collectionName) : boolean
+    {
+        // TODO
+    }
+
+    private function listDecks(string $collectionName) : array
+    {
+        // TODO
+    }
+
+    private function createDeck(string $collectionName, string $deckName) : boolean
+    {
+        // TODO
+    }
+
+    private function addCard(
+        string $collectionName,
+        string $deckName,
+        string $front,
+        string $back,
+        array $metadata
+    ) : boolean {
+        // TODO
+        // return new card UUID?
+    }
+
+    private function nextCard() : array
+    {
+        // TODO
+        // return text with metadata
+    }
+
+    private function answerCard(string $answer) : boolean
+    {
+        // TODO
     }
 }
