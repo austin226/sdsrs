@@ -14,6 +14,13 @@ class ApiController
             'method' => 'GET',
             'function' => 'listCollections',
             'parameters' => []
+        ],
+        'list_decks' => [
+            'method' => 'GET',
+            'function' => 'listDecks',
+            'parameters' => [
+                'collection'
+            ]
         ]
         // TODO others
     ];
@@ -45,9 +52,9 @@ class ApiController
 
         if ($action == 'list_collections') {
             return $this->listCollections();
-        } elseif ($action == 'select_collection') {
-            $collectionName = $this->extractParameter($requestData, 'collectionName');
-            $this->selectCollection($collectionName);
+        } elseif ($action == 'list_decks') {
+            $collectionName = $this->extractParameter($requestData, 'collection');
+            return $this->listDecks($collectionName);
         }
 
         return [];

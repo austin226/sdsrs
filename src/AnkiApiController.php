@@ -38,9 +38,11 @@ class AnkiApiController
      */
     public function listDecks(string $collectionName) : array
     {
-        $url = "/collection/{$collectionName}/list_decks";
-        $response = $this->ankiServerClient->get($url);
+
+        $url = "collection/{$collectionName}/list_decks";
+        $response = $this->ankiServerClient->request('POST', $url, ['json' => []]);
+        $responseBody = $response->getBody();
         $deckList = json_decode($responseBody, true);
-        return $collectionList;
+        return $deckList;
     }
 }
