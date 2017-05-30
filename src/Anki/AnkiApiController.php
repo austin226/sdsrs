@@ -51,4 +51,13 @@ class AnkiApiController implements AnkiApiControllerInterface
         $url = "collection/";
         // TODO
     }
+
+    public function nextCard(string $collectionName, string $deckName) : array
+    {
+        $url = "collection/{$collectionName}/next_card";
+        $requestData = ['deck' => $deckName];
+        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+
+        var_dump($response);
+    }
 }

@@ -31,6 +31,14 @@ class ApiController implements ApiControllerInterface
                 'front',
                 'back'
             ]
+        ],
+        'next_card' => [
+            'method' => 'POST',
+            'function' => 'nextCard',
+            'parameters' => [
+                'collection',
+                'deck'
+            ]
         ]
         // TODO others
     ];

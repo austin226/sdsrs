@@ -34,4 +34,15 @@ interface AnkiApiControllerInterface
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function addCard(string $collectionName, string $front, string $back) : int;
+
+    /**
+     * Reads out the next card in the deck.
+     *
+     * @param string $collectionName
+     * @param string $deckName
+     *
+     * @return array
+     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     */
+    public function nextCard(string $collectionName, string $deckName) : array;
 }

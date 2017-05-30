@@ -27,7 +27,8 @@ try {
             $response = $apiController->doAction('GET', $action, $_GET);
             break;
         case 'POST':
-            $response = $apiController->doAction('POST', $action, $_POST);
+            $requestBody = json_decode(file_get_contents('php://input'), true) or die("Could not decode json");
+            $response = $apiController->doAction('POST', $action, $requestBody);
             break;
         default:
             throw new MethodNotAllowedException("Method not allowed: ".$_SERVER['REQUEST_METHOD']);
