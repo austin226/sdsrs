@@ -39,7 +39,15 @@ class ApiController implements ApiControllerInterface
                 'collection',
                 'deck'
             ]
-        ]
+        ],
+        'reset_scheduler' => [
+            'method' => 'POST',
+            'function' => 'resetScheduler',
+            'parameters' => [
+                'collection',
+                'deck'
+            ]
+        ],
         // TODO others
     ];
 
