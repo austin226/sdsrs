@@ -58,6 +58,7 @@ class AnkiApiController implements AnkiApiControllerInterface
         $requestData = ['deck' => $deckName];
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
 
-        var_dump($response);
+        var_dump($response->getBody());
+        // TODO
     }
 }
