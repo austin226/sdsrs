@@ -61,4 +61,14 @@ class AnkiApiController implements AnkiApiControllerInterface
         var_dump($response->getBody());
         // TODO
     }
+
+    public function resetScheduler(string $collectionName, string $deckName)
+    {
+        $url = "collection/{$collectionName}/reset_scheduler";
+        $requestData = ['deck' => $deckName];
+        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+
+        var_dump($response->getBody());
+        // TODO
+    }
 }

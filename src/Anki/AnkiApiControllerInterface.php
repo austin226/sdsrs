@@ -45,4 +45,15 @@ interface AnkiApiControllerInterface
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function nextCard(string $collectionName, string $deckName) : array;
+
+    /**
+     * Resets the scheduler, returning an array representing how many cards are left now.
+     *
+     * @param string $collectionName
+     * @param string $deckName
+     *
+     * @return array
+     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     */
+    public function resetScheduler(string $collectionName, string $deckName);
 }
