@@ -57,19 +57,33 @@ class AnkiApiController implements AnkiApiControllerInterface
         $url = "collection/{$collectionName}/next_card";
         $requestData = ['deck' => $deckName];
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        $responseBody = $response->getBody();
 
-        var_dump($response->getBody());
-        // TODO
+        $cardDataArray = json_decode($responseBody, true);
+
+        $answerButtons = [];
+        foreach ($cardDataArray['answer_buttons'] as $answerButton) {
+            $answerButtons[] = [
+                'ease' => $answerButton['ease'],
+                'label' => $answerButton['string_label']
+            ];
+        }
+
+        return [
+            'id' => $cardDataArray['id'],
+            'question' => $cardDataArray['question'],
+            'answer' => $cardDataArray['answer'],
+            'answer_buttons' => $answerButtons,
+        ];
     }
 
-    public function resetScheduler(string $collectionName, string $deckName)
+    public function resetScheduler(string $collectionName, string $deckName) : array
     {
         $url = "collection/{$collectionName}/reset_scheduler";
         $requestData = ['deck' => $deckName];
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
         $responseBody = $response->getBody();
         $schedulerDataArray = json_decode($responseBody, true);
-
 
         return [
             'cards' => [
