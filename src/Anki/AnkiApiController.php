@@ -54,10 +54,8 @@ class AnkiApiController implements AnkiApiControllerInterface
 
     private function parseAnswer(string $rawAnswer) : string
     {
-        //preg_match('/<hr id=\w+>/', $rawAnswer, $matches);
-        //var_dump($matches);
-        $answer = $rawAnswer;
-        return $answer;
+        preg_match("/<hr id=answer>(\\n)*(.*)/", $rawAnswer, $matches);
+        return $matches[2];
     }
 
     public function nextCard(string $collectionName, string $deckName) : array
