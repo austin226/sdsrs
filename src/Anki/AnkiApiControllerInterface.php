@@ -60,9 +60,10 @@ interface AnkiApiControllerInterface
     /**
      * @param string $collectionName
      * @param string $cardID
+     * @param string $answer
      *
      * @return array
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
-    public function answerCard(string $collectionName, string $cardID) : array;
+    public function answerCard(string $collectionName, string $cardID, string $answer) : array;
 }

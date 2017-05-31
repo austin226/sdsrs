@@ -48,6 +48,15 @@ class ApiController implements ApiControllerInterface
                 'deck'
             ]
         ],
+        'answer_card' => [
+            'method' => 'POST',
+            'function' => 'answerCard',
+            'parameters' => [
+                'collection',
+                'cardID',
+                'answer'
+            ]
+        ]
         // TODO others
     ];
 
