@@ -1,6 +1,6 @@
 <?php
 
-namespace Austin226\Sdsrs;
+namespace Aalmond\Sdsrs;
 
 class JsonPrinter
 {
