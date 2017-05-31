@@ -12,4 +12,4 @@ This is the front-end client, designed for use with [sdsrs-anki-server](https://
 | `add_card` |   POST | `api.php?action=add_card` | `{"collection": "collection1", "deck1", "front": "front1", "back": "back1"}` | 201 | `{"card_name": "card1"}` | 404,422 |
 | `next_card` | POST | `api.php?action=next_card` | `{"collection": "collection1", "deck": "deck1"}` | 200 | 404 |
 | `reset_scheduler` | POST | `api.php?action=reset_scheduler` | `{"collection": "collection1", "deck": "deck1"}` | 200 | 404 |
-| `answer_card` | POST | `api.php?action=answer_card` | `{"collection": "collection1", "deck": "deck1", "answer": "hard"}` | 200 | 404,422 |
+| `answer_card` | POST | `api.php?action=answer_card` | `{"collection": "collection1", "cardID": "1235324", "answer": "2"}` | 200 | 404,422 |
