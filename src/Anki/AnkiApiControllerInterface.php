@@ -36,7 +36,7 @@ interface AnkiApiControllerInterface
     public function addCard(string $collectionName, string $front, string $back) : int;
 
     /**
-     * Reads out the next card in the deck.
+     * Reads out the next card in the deck, or [] if the end of the deck was reached.
      *
      * @param string $collectionName
      * @param string $deckName

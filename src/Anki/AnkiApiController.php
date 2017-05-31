@@ -52,6 +52,14 @@ class AnkiApiController implements AnkiApiControllerInterface
         // TODO
     }
 
+    private function parseAnswer(string $rawAnswer) : string
+    {
+        //preg_match('/<hr id=\w+>/', $rawAnswer, $matches);
+        //var_dump($matches);
+        $answer = $rawAnswer;
+        return $answer;
+    }
+
     public function nextCard(string $collectionName, string $deckName) : array
     {
         $url = "collection/{$collectionName}/next_card";
@@ -60,7 +68,16 @@ class AnkiApiController implements AnkiApiControllerInterface
         $responseBody = $response->getBody();
 
         $cardDataArray = json_decode($responseBody, true);
+        if (empty($cardDataArray)) {
+            return [];
+        }
 
+        $question = $cardDataArray['question'];
+
+        // Parse answer
+        $answer = $this->parseAnswer($cardDataArray['answer']);
+
+        // Parse answer buttons
         $answerButtons = [];
         foreach ($cardDataArray['answer_buttons'] as $answerButton) {
             $answerButtons[] = [
@@ -71,8 +88,8 @@ class AnkiApiController implements AnkiApiControllerInterface
 
         return [
             'id' => $cardDataArray['id'],
-            'question' => $cardDataArray['question'],
-            'answer' => $cardDataArray['answer'],
+            'question' => $question,
+            'answer' => $answer,
             'answer_buttons' => $answerButtons,
         ];
     }
