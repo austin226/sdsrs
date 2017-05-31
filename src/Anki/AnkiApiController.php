@@ -111,6 +111,18 @@ class AnkiApiController implements AnkiApiControllerInterface
 
     public function answerCard(string $collectionName, string $cardID, string $answer) : array
     {
-        // TODO
+        $url = "collection/{$collectionName}/answer_card";
+        $requestData = [
+            'id' => $cardID,
+            'ease' => $answer
+        ];
+
+        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        $responseBody = $response->getBody();
+        $responseDataArray = json_decode($responseBody, true);
+
+        return [
+            'response' => $responseDataArray
+        ];
     }
 }
