@@ -108,4 +108,9 @@ class AnkiApiController implements AnkiApiControllerInterface
             ]
         ];
     }
+
+    public function answerCard(string $collectionName, string $cardID) : array
+    {
+        // TODO
+    }
 }

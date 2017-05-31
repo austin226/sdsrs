@@ -56,4 +56,13 @@ interface AnkiApiControllerInterface
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function resetScheduler(string $collectionName, string $deckName) : array;
+
+    /**
+     * @param string $collectionName
+     * @param string $cardID
+     *
+     * @return array
+     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     */
+    public function answerCard(string $collectionName, string $cardID) : array;
 }
