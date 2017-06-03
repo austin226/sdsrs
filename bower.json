@@ -1,0 +1,17 @@
+{
+  "name": "sdsrs",
+  "homepage": "https://github.com/austin226/sdsrs",
+  "authors": [
+    "Austin Almond <austin226@live.com>"
+  ],
+  "description": "Spoken Dialog Spaced Repetition System",
+  "main": "public/index.html",
+  "license": "AGPL-3.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
