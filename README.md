@@ -4,7 +4,11 @@ Spoken Dialog Spaced-Repetition System
 This is the front-end client, designed for use with [sdsrs-anki-server](https://github.com/austin226/sdsrs-anki-server) which in turn uses [anki-sync-server](https://github.com/dsnopek/anki-sync-server).
 
 # Config
+## Server Configuration
 You need to input an sdsrs-anki-server base URI (IP and port) into a file called `api_config.json`. Check `api_config.example.json` for an example.
+
+## Composer
+This repository uses [Composer](https://getcomposer.org/) for dependency management. You must install the composer dependencies by calling `composer install` from within the project's base directory.
 
 # API
 | action | method | example URL | data | success response | failure response |
