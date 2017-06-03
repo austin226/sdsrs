@@ -3,6 +3,9 @@ Spoken Dialog Spaced-Repetition System
 
 This is the front-end client, designed for use with [sdsrs-anki-server](https://github.com/austin226/sdsrs-anki-server) which in turn uses [anki-sync-server](https://github.com/dsnopek/anki-sync-server).
 
+# Config
+You need to input an sdsrs-anki-server base URI (IP and port) into a file called `api_config.json`. Check `api_config.example.json` for an example.
+
 # API
 | action | method | example URL | data | success response | failure response |
 |--------|--------|-------------|------|------------------|------------------|
