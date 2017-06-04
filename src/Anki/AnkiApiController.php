@@ -64,12 +64,18 @@ class AnkiApiController implements AnkiApiControllerInterface
 
         $deckList = [];
         foreach ($deckDataArray as $deckData) {
-            $deckList[] = [
-                'id' => $deckData['id'],
-                'name' => $deckData['name']
-            ];
+            $deckList[] = $deckData['name'];
         }
-        return $deckList;
+
+        $outputSpeech = "You have the following decks in $collectionName: ";
+        $outputSpeech .= implode(', ', $deckList);
+
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            ['collection' => $collectionName, 'decks' => $deckList]
+        );
+        return $speechResponse;
     }
 
     public function addCard(string $collectionName, string $front, string $back) : SpeechResponse
