@@ -2,6 +2,7 @@
 
 namespace Aalmond\Sdsrs\Anki;
 
+use Aalmond\Sdsrs\ApiAi\SpeechResponse;
 use Aalmond\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;
 
@@ -16,15 +17,24 @@ class AnkiApiController implements AnkiApiControllerInterface
         ]);
     }
 
-    public function listCollections() : array
+    public function listCollections() : SpeechResponse
     {
         $response = $this->ankiServerClient->post('list_collections');
         $responseBody = $response->getBody();
         $collectionList = json_decode($responseBody, true);
-        return $collectionList;
+
+        $outputSpeech = "You have the following collections: ";
+        $outputSpeech .= implode(', ', $collectionList);
+
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            []
+        );
+        return $speechResponse;
     }
 
-    public function listDecks(string $collectionName) : array
+    public function listDecks(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/list_decks";
         $response = $this->ankiServerClient->post($url, ['json' => []]);
@@ -41,24 +51,24 @@ class AnkiApiController implements AnkiApiControllerInterface
         return $deckList;
     }
 
-    public function addCard(string $collectionName, string $front, string $back) : int
+    public function addCard(string $collectionName, string $front, string $back) : SpeechResponse
     {
         // TODO
     }
 
-    private function findAllNotes(string $collectionName) : array
+    private function findAllNotes(string $collectionName) : SpeechResponse
     {
         $url = "collection/";
         // TODO
     }
 
-    private function parseAnswer(string $rawAnswer) : string
+    private function parseAnswer(string $rawAnswer) : SpeechResponse
     {
         preg_match("/<hr id=answer>(\\n)*(.*)/", $rawAnswer, $matches);
         return $matches[2];
     }
 
-    public function nextCard(string $collectionName, string $deckName) : array
+    public function nextCard(string $collectionName, string $deckName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/next_card";
         $requestData = ['deck' => $deckName];
@@ -92,7 +102,7 @@ class AnkiApiController implements AnkiApiControllerInterface
         ];
     }
 
-    public function resetScheduler(string $collectionName, string $deckName) : array
+    public function resetScheduler(string $collectionName, string $deckName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/reset_scheduler";
         $requestData = ['deck' => $deckName];
@@ -109,7 +119,7 @@ class AnkiApiController implements AnkiApiControllerInterface
         ];
     }
 
-    public function answerCard(string $collectionName, string $cardID, string $answer) : array
+    public function answerCard(string $collectionName, string $cardID, string $answer) : SpeechResponse
     {
         $url = "collection/{$collectionName}/answer_card";
         $requestData = [

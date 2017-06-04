@@ -3,6 +3,7 @@
 namespace Aalmond\Sdsrs\Api;
 
 use Aalmond\Sdsrs\Anki\AnkiApiControllerInterface;
+use Aalmond\Sdsrs\ApiAi\SpeechResponse;
 use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 
@@ -12,19 +13,16 @@ class ApiController implements ApiControllerInterface
 
     const ACTIONS_LIST = [
         'list_collections' => [
-            'method' => 'GET',
             'function' => 'listCollections',
             'parameters' => []
         ],
         'list_decks' => [
-            'method' => 'GET',
             'function' => 'listDecks',
             'parameters' => [
                 'collection'
             ]
         ],
         'add_card' => [
-            'method' => 'POST',
             'function' => 'addCard',
             'parameters' => [
                 'collection',
@@ -33,7 +31,6 @@ class ApiController implements ApiControllerInterface
             ]
         ],
         'next_card' => [
-            'method' => 'POST',
             'function' => 'nextCard',
             'parameters' => [
                 'collection',
@@ -41,7 +38,6 @@ class ApiController implements ApiControllerInterface
             ]
         ],
         'reset_scheduler' => [
-            'method' => 'POST',
             'function' => 'resetScheduler',
             'parameters' => [
                 'collection',
@@ -49,7 +45,6 @@ class ApiController implements ApiControllerInterface
             ]
         ],
         'answer_card' => [
-            'method' => 'POST',
             'function' => 'answerCard',
             'parameters' => [
                 'collection',
@@ -65,15 +60,30 @@ class ApiController implements ApiControllerInterface
         $this->ankiController = $ankiController;
     }
 
-    public function doAction(string $method, string $action, array $requestData) : array
+    /**
+     * Handles request and passes control to doAction
+     *
+     * @param array
+     * @return array
+     */
+    public function handleRequest(array $requestData) : array
+    {
+        if (!isset($requestData['result']['metadata']['intentName'])) {
+            throw new BadRequestException("Invalid request.");
+        }
+
+        $intent = $requestData['result']['metadata']['intentName'];
+        $speechResponse = $this->doAction($intent, $requestData['result']['metadata']);
+        return json_decode(json_encode($speechResponse), true);
+    }
+
+    private function doAction(string $action, array $requestData) : SpeechResponse
     {
         if (!isset(self::ACTIONS_LIST[$action])) {
             throw new BadRequestException("Unknown action: '$action'");
         }
 
         $actionInfo = self::ACTIONS_LIST[$action];
-
-        $this->validateMethod($method, $action, $actionInfo);
 
         $functionName = $actionInfo['function'];
         $functionParameters = [];
@@ -82,21 +92,6 @@ class ApiController implements ApiControllerInterface
         }
 
         return call_user_func_array([$this->ankiController, $functionName], $functionParameters);
-    }
-
-    /**
-     * Checks that we are using the right method for the action.
-     *
-     * @throws \Aalmond\Sdsrs\Exceptions\MethodNotAllowedException
-     */
-    private function validateMethod(string $method, string $action, array $actionInfo) : void
-    {
-        if ($actionInfo['method'] != $method) {
-            $errMsg = <<<TEXT
-Method {$method} not allowed for action {$action}. Use {$actionInfo['method']}.
-TEXT;
-            throw new MethodNotAllowedException($errMsg);
-        }
     }
 
     /**
