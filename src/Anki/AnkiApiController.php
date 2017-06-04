@@ -22,6 +22,7 @@ class AnkiApiController implements AnkiApiControllerInterface
         $response = $this->ankiServerClient->post('list_collections');
         $responseBody = $response->getBody();
         $collectionList = json_decode($responseBody, true);
+        $collectionList = array_map('urldecode', $collectionList);
 
         $outputSpeech = "You have the following collections: ";
         $outputSpeech .= implode(', ', $collectionList);
