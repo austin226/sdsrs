@@ -91,13 +91,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $speechResponse;
     }
 
-    private function findAllNotes(string $collectionName) : SpeechResponse
-    {
-        $url = "collection/";
-        // TODO
-    }
-
-    private function parseAnswer(string $rawAnswer) : SpeechResponse
+    private function parseAnswer(string $rawAnswer) : string
     {
         preg_match("/<hr id=answer>(\\n)*(.*)/", $rawAnswer, $matches);
         return $matches[2];
@@ -107,18 +101,24 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
     {
         $url = "collection/{$collectionName}/next_card";
         $requestData = ['deck' => 'Default'];
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
+        $cardDataArray = $this->getResponseData($url, $requestData);
 
-        $cardDataArray = json_decode($responseBody, true);
         if (empty($cardDataArray)) {
-            return [];
+            $outputSpeech = "You are out of cards.";
+            $speechResponse = new SpeechResponse(
+                $outputSpeech,
+                $outputSpeech,
+                ['collection' => $collectionName]
+            );
+            return $speechResponse;
         }
 
         $question = $cardDataArray['question'];
+        $this->logger->debug("Parsed question: $question");
 
         // Parse answer
         $answer = $this->parseAnswer($cardDataArray['answer']);
+        $this->logger->debug("Parsed answer: $answer");
 
         // Parse answer buttons
         $answerButtons = [];
@@ -128,13 +128,25 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
                 'label' => $answerButton['string_label']
             ];
         }
+        $this->logger->debug("Parsed answer buttons: ".json_encode($answerButtons));
 
-        return [
+        $cardDataOutput = [
             'id' => $cardDataArray['id'],
             'question' => $question,
             'answer' => $answer,
             'answer_buttons' => $answerButtons,
         ];
+
+        $outputSpeech = $question;
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            [
+                'cardData' => $cardDataOutput,
+                'collection' => $collectionName
+            ]
+        );
+        return $speechResponse;
     }
 
     public function resetScheduler(string $collectionName) : SpeechResponse
