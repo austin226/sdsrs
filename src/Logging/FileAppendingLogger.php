@@ -28,7 +28,8 @@ class FileAppendingLogger extends AbstractLogger
 
     public function log($level, $message, array $context = [])
     {
+        $timestamp = date('Y-m-d H:i:s');
         $contextStr = json_encode($context);
-        file_put_contents($this->filepath, "[$level] $message $contextStr\n", FILE_APPEND);
+        file_put_contents($this->filepath, "[$timestamp][$level] $message $contextStr\n", FILE_APPEND);
     }
 }
