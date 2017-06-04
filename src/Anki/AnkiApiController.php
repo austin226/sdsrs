@@ -140,18 +140,22 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
     public function resetScheduler(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/reset_scheduler";
-        $requestData = ['deck' => $deckName];
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
-        $schedulerDataArray = json_decode($responseBody, true);
+        $requestData = ['deck' => 'Default'];
+        $schedulerDataArray = $this->getResponseData($url, $requestData);
 
-        return [
-            'cards' => [
-                'review' => $schedulerDataArray['review_cards'],
-                'learning' => $schedulerDataArray['learning_cards'],
-                'new' => $schedulerDataArray['new_cards']
-            ]
+        $numCards = [
+            'review' => $schedulerDataArray['review_cards'],
+            'learning' => $schedulerDataArray['learning_cards'],
+            'new' => $schedulerDataArray['new_cards']
         ];
+        $outputSpeech = "Reset scheduler for $collectionName. You have {$numCards['new']} new cards.";
+
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            ['numCards' => $numCards]
+        );
+        return $speechResponse;
     }
 
     public function answerCard(string $collectionName, string $cardID, string $answer) : SpeechResponse
