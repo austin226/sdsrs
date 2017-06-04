@@ -8,12 +8,14 @@ use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\HttpException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 use Aalmond\Sdsrs\JsonPrinter;
+use Aalmond\Sdsrs\Logging\FileAppendingLogger;
 
 $config = json_decode(file_get_contents('api_config.json'), true);
 $ankiServerUri = $config['uri'];
 $ankiApiController = new AnkiApiController($ankiServerUri);
 $apiController = new ApiController($ankiApiController);
 $jsonPrinter = new JsonPrinter();
+$logger = new FileAppendingLogger('debug.log');
 
 try {
     switch ($_SERVER['REQUEST_METHOD']) {
