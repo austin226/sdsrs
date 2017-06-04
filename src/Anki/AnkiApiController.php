@@ -5,16 +5,30 @@ namespace Aalmond\Sdsrs\Anki;
 use Aalmond\Sdsrs\ApiAi\SpeechResponse;
 use Aalmond\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class AnkiApiController implements AnkiApiControllerInterface
+class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterface
 {
     private $ankiServerClient;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     public function __construct(string $ankiServerUri)
     {
         $this->ankiServerClient = new Client([
             'base_uri' => $ankiServerUri
         ]);
+        $this->setLogger(new NullLogger());
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function listCollections() : SpeechResponse
@@ -35,12 +49,12 @@ class AnkiApiController implements AnkiApiControllerInterface
         return $speechResponse;
     }
 
-    public function createDeck(string $collectionName, string $deckName, int $count) : SpeechResponse
+    public function createDeck(string $collectionName, string $deckName, string $count) : SpeechResponse
     {
         $url = "collection/{$collectionName}/create_dynamic_deck";
         $requestData = [
             'name' => $deckName,
-            'count' => $count,
+            'count' => intval($count),
             'mode' => 'random'
         ];
 

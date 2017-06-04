@@ -80,6 +80,7 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
+        $this->ankiController->setLogger($logger);
     }
 
     /**
