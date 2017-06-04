@@ -53,7 +53,24 @@ class AnkiApiController implements AnkiApiControllerInterface
 
     public function addCard(string $collectionName, string $front, string $back) : SpeechResponse
     {
-        // TODO
+        $url = "collection/{$collectionName}/add_note";
+        $requestData = [
+            'model' => 'Basic',
+            'fields' => [
+                'Front' => $front,
+                'Back' => $back
+            ]
+        ];
+        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        $responseBody = $response->getBody();
+
+        $outputSpeech = "Card added to $collectionName";
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            ['front' => $front, 'back' => $back]
+        );
+        return $speechResponse;
     }
 
     private function findAllNotes(string $collectionName) : SpeechResponse
