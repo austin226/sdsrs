@@ -70,47 +70,6 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $speechResponse;
     }
 
-    public function createDeck(string $collectionName, string $deckName, string $count) : SpeechResponse
-    {
-        $url = "collection/{$collectionName}/create_dynamic_deck";
-        $requestData = [
-            'name' => $deckName,
-            'count' => intval($count),
-            'mode' => 'random'
-        ];
-
-        $responseData = $this->getResponseData($url, $requestData);
-
-        $outputSpeech = "Deck created in $collectionName with name $deckName";
-        $speechResponse = new SpeechResponse(
-            $outputSpeech,
-            $outputSpeech,
-            ['deckData' => $responseBody]
-        );
-        return $speechResponse;
-    }
-
-    public function listDecks(string $collectionName) : SpeechResponse
-    {
-        $url = "collection/{$collectionName}/list_decks";
-        $deckDataArray = $this->getResponseData($url, []);
-
-        $deckList = [];
-        foreach ($deckDataArray as $deckData) {
-            $deckList[] = $deckData['name'];
-        }
-
-        $outputSpeech = "You have the following decks in $collectionName: ";
-        $outputSpeech .= implode(', ', $deckList);
-
-        $speechResponse = new SpeechResponse(
-            $outputSpeech,
-            $outputSpeech,
-            ['collection' => $collectionName, 'decks' => $deckList]
-        );
-        return $speechResponse;
-    }
-
     public function addCard(string $collectionName, string $front, string $back) : SpeechResponse
     {
         $url = "collection/{$collectionName}/add_note";
