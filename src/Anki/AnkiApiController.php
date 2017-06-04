@@ -91,7 +91,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $speechResponse;
     }
 
-    private function parseAnswer(string $rawAnswer) : SpeechResponse
+    private function parseAnswer(string $rawAnswer) : string
     {
         preg_match("/<hr id=answer>(\\n)*(.*)/", $rawAnswer, $matches);
         return $matches[2];
@@ -117,8 +117,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         $this->logger->debug("Parsed question: $question");
 
         // Parse answer
-        //$answer = $this->parseAnswer($cardDataArray['answer']);
-        $answer = 'TODO';
+        $answer = $this->parseAnswer($cardDataArray['answer']);
         $this->logger->debug("Parsed answer: $answer");
 
         // Parse answer buttons
