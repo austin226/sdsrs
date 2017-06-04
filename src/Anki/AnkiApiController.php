@@ -91,12 +91,6 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $speechResponse;
     }
 
-    private function findAllNotes(string $collectionName) : SpeechResponse
-    {
-        $url = "collection/";
-        // TODO
-    }
-
     private function parseAnswer(string $rawAnswer) : SpeechResponse
     {
         preg_match("/<hr id=answer>(\\n)*(.*)/", $rawAnswer, $matches);
@@ -107,12 +101,16 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
     {
         $url = "collection/{$collectionName}/next_card";
         $requestData = ['deck' => 'Default'];
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
+        $cardDataArray = $this->getResponseData($url, $requestData);
 
-        $cardDataArray = json_decode($responseBody, true);
         if (empty($cardDataArray)) {
-            return [];
+            $outputSpeech = "You are out of cards.";
+            $speechResponse = new SpeechResponse(
+                $outputSpeech,
+                $outputSpeech,
+                ['collection' => $collectionName]
+            );
+            return $speechResponse;
         }
 
         $question = $cardDataArray['question'];
@@ -129,12 +127,23 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             ];
         }
 
-        return [
+        $cardDataOutput = [
             'id' => $cardDataArray['id'],
             'question' => $question,
             'answer' => $answer,
             'answer_buttons' => $answerButtons,
         ];
+
+        $outputSpeech = $question;
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            [
+                'cardData' => $cardDataOutput,
+                'collection' => $collectionName
+            ]
+        );
+        return $speechResponse;
     }
 
     public function resetScheduler(string $collectionName) : SpeechResponse
