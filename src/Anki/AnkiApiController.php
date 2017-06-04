@@ -137,6 +137,12 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             'answer_buttons' => $answerButtons,
         ];
 
+        $contextOut = [
+            'name' => 'cardData',
+            'lifespan' => 2,
+            'parameters' => $cardDataOutput
+        ];
+
         $outputSpeech = $question;
         $speechResponse = new SpeechResponse(
             $outputSpeech,
@@ -144,7 +150,8 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             [
                 'cardData' => $cardDataOutput,
                 'collection' => $collectionName
-            ]
+            ],
+            $contextOut
         );
         return $speechResponse;
     }
