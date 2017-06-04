@@ -117,7 +117,8 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         $this->logger->debug("Parsed question: $question");
 
         // Parse answer
-        $answer = $this->parseAnswer($cardDataArray['answer']);
+        //$answer = $this->parseAnswer($cardDataArray['answer']);
+        $answer = 'TODO';
         $this->logger->debug("Parsed answer: $answer");
 
         // Parse answer buttons
