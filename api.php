@@ -16,16 +16,10 @@ $apiController = new ApiController($ankiApiController);
 $jsonPrinter = new JsonPrinter();
 
 try {
-    if (!isset($_REQUEST['action'])) {
-        throw new BadRequestException('You must specify an action.');
-    }
-
-    $action = $_REQUEST['action'];
-
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
             $requestBody = json_decode(file_get_contents('php://input'), true) or die("Could not decode json");
-            $response = $apiController->doAction('POST', $action, $requestBody);
+            $response = $apiController->handleRequest($requestBody);
             break;
         default:
             throw new MethodNotAllowedException("Method not allowed: ".$_SERVER['REQUEST_METHOD']);
