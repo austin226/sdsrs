@@ -75,7 +75,7 @@ class ApiController implements ApiControllerInterface
         return [];
     }
 
-    public function doAction(string $action, array $requestData) : array
+    private function doAction(string $action, array $requestData) : array
     {
         if (!isset(self::ACTIONS_LIST[$action])) {
             throw new BadRequestException("Unknown action: '$action'");
