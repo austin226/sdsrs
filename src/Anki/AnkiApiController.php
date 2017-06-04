@@ -3,6 +3,7 @@
 namespace Aalmond\Sdsrs\Anki;
 
 use Aalmond\Sdsrs\ApiAi\SpeechResponse;
+use Aalmond\Sdsrs\Exceptions\HttpException;
 use Aalmond\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
@@ -31,10 +32,23 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         $this->logger = $logger;
     }
 
+    private function getResponseData(string $url, array $requestData = []) : array
+    {
+        $this->logger->debug("Making request to $url with data ".json_encode($requestData));
+        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        $statusCode = $response->getStatusCode();
+        if ($statusCode >= 400) {
+            $this->logger->error("Anki responded with $statusCode");
+            throw new HttpException("Error calling Anki server", $statusCode);
+        }
+        $responseBody = $response->getBody();
+        $this->logger->debug("Response body: ".json_encode($responseBody));
+        return $responseBody;
+    }
+
     public function listCollections() : SpeechResponse
     {
-        $response = $this->ankiServerClient->post('list_collections');
-        $responseBody = $response->getBody();
+        $responseBody = $this->getResponseData('list_collections');
         $collectionList = json_decode($responseBody, true);
         $collectionList = array_map('urldecode', $collectionList);
 
@@ -58,8 +72,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             'mode' => 'random'
         ];
 
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
+        $responseBody = $this->getResponseData($url, $requestData);
 
         $outputSpeech = "Deck created in $collectionName with name $deckName";
         $speechResponse = new SpeechResponse(
