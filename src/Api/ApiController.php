@@ -36,14 +36,12 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
             'function' => 'nextCard',
             'parameters' => [
                 'collection',
-                'deck'
             ]
         ],
         'reset_scheduler' => [
             'function' => 'resetScheduler',
             'parameters' => [
                 'collection',
-                'deck'
             ]
         ],
         'answer_card' => [

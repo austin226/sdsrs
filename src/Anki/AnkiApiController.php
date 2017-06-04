@@ -103,10 +103,10 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $matches[2];
     }
 
-    public function nextCard(string $collectionName, string $deckName) : SpeechResponse
+    public function nextCard(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/next_card";
-        $requestData = ['deck' => $deckName];
+        $requestData = ['deck' => 'Default'];
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
         $responseBody = $response->getBody();
 
