@@ -28,7 +28,7 @@ try {
             throw new MethodNotAllowedException("Method not allowed: ".$_SERVER['REQUEST_METHOD']);
     }
 } catch (HttpException $e) {
-    $logger->error("Received exception {$e->getCode()}: ".$e->getMessage());
+    $logger->error("Received exception: ".$e->getMessage(), ['code' => $e->getCode()]);
     $jsonPrinter->sendAsJson($e->getMessage(), $e->getCode());
     exit();
 }
