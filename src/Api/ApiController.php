@@ -125,7 +125,7 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
     private function extractParameter(array $requestParameters, string $paramName) : string
     {
         if (isset($requestParameters[$paramName])) {
-            return $requestParameters[$paramName];
+            return strtolower($requestParameters[$paramName]);
         }
 
         throw new BadRequestException("Parameter '$paramName' is missing.");
