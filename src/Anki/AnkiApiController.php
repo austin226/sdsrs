@@ -6,6 +6,7 @@ use Aalmond\Sdsrs\ApiAi\SpeechResponse;
 use Aalmond\Sdsrs\Exceptions\HttpException;
 use Aalmond\Sdsrs\Exceptions\ResourceNotFoundException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\TransferException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -35,11 +36,11 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
     private function getResponseData(string $url, array $requestData = []) : array
     {
         $this->logger->debug("Making request to $url with data ".json_encode($requestData));
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $statusCode = $response->getStatusCode();
-        if ($statusCode >= 400) {
-            $this->logger->error("Anki responded with $statusCode");
-            throw new HttpException("Error calling Anki server", $statusCode);
+        try {
+            $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        } catch (TransferException $e) {
+            $this->logger->error("Anki responded with error");
+            throw new HttpException($e->getMessage(), $e->getCode());
         }
         $responseBody = $response->getBody();
         $this->logger->debug("Response body: ".json_encode($responseBody));

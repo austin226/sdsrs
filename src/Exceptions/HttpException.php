@@ -2,6 +2,6 @@
 
 namespace Aalmond\Sdsrs\Exceptions;
 
-abstract class HttpException extends \RuntimeException
+class HttpException extends \RuntimeException
 {
 }
