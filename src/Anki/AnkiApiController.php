@@ -35,6 +35,26 @@ class AnkiApiController implements AnkiApiControllerInterface
         return $speechResponse;
     }
 
+    public function createDeck(string $collectionName, string $deckName, int $count) : SpeechResponse
+    {
+        $url = "collection/{$collectionName}/create_dynamic_deck";
+        $requestData = [
+            'name' => $deckName,
+            'count' => $count,
+            'mode' => $random
+        ];
+
+        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+
+        $outputSpeech = "Deck created in $collectionName with name $deckName";
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            []
+        );
+        return $speechResponse;
+    }
+
     public function listDecks(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/list_decks";
@@ -63,7 +83,6 @@ class AnkiApiController implements AnkiApiControllerInterface
             ]
         ];
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
 
         $outputSpeech = "Card added to $collectionName";
         $speechResponse = new SpeechResponse(

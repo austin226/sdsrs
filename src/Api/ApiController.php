@@ -24,6 +24,13 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
             'function' => 'listCollections',
             'parameters' => []
         ],
+        'create_deck' => [
+            'function' => 'createDeck',
+            'parameters' => [
+                'collection',
+                'deckName'
+            ]
+        ],
         'list_decks' => [
             'function' => 'listDecks',
             'parameters' => [
