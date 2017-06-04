@@ -137,7 +137,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         ];
     }
 
-    public function resetScheduler(string $collectionName, string $deckName) : SpeechResponse
+    public function resetScheduler(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/reset_scheduler";
         $requestData = ['deck' => $deckName];
