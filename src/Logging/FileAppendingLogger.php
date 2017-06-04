@@ -13,6 +13,7 @@ class FileAppendingLogger extends AbstractLogger
         if (!file_exists($filepath)) {
             touch($filepath);
         }
+        $this->filepath = $filepath;
     }
 
     public function log($level, $message, array $context = [])

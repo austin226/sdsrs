@@ -85,6 +85,7 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
         if (!isset($requestData['result']['metadata']['intentName'])) {
             throw new BadRequestException("Invalid request.");
         }
+        $this->logger->debug("Received request: ".json_encode($requestData));
 
         $intent = $requestData['result']['metadata']['intentName'];
         $speechResponse = $this->doAction($intent, $requestData['result']['metadata']);
