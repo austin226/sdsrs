@@ -3,6 +3,7 @@
 namespace Aalmond\Sdsrs\Api;
 
 use Aalmond\Sdsrs\Anki\AnkiApiControllerInterface;
+use Aalmond\Sdsrs\ApiAi\SpeechResponse;
 use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
 
@@ -72,7 +73,8 @@ class ApiController implements ApiControllerInterface
         }
 
         $intent = $requestData['result']['metadata']['intentName'];
-        return [];
+        $speechResponse = $this->doAction($intent, $requestData['result']['metadata']);
+        return json_decode(json_encode($speechResponse), true);
     }
 
     private function doAction(string $action, array $requestData) : array
@@ -82,8 +84,6 @@ class ApiController implements ApiControllerInterface
         }
 
         $actionInfo = self::ACTIONS_LIST[$action];
-
-        $this->validateMethod($action, $actionInfo);
 
         $functionName = $actionInfo['function'];
         $functionParameters = [];
