@@ -40,7 +40,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
         } catch (TransferException $e) {
             $this->logger->error("Anki responded with error");
-            throw new HttpException($e->getMessage(), $e->getCode());
+            throw new HttpException($e->getResponse()->getBody()->getContents(), $e->getCode());
         }
         $responseBody = $response->getBody();
         $this->logger->debug("Response body: ".json_encode($responseBody));
