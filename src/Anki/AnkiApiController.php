@@ -29,7 +29,7 @@ class AnkiApiController implements AnkiApiControllerInterface
         $speechResponse = new SpeechResponse(
             $outputSpeech,
             $outputSpeech,
-            []
+            ['collections' => $collectionList]
         );
         return $speechResponse;
     }
