@@ -23,9 +23,6 @@ try {
     $action = $_REQUEST['action'];
 
     switch ($_SERVER['REQUEST_METHOD']) {
-        case 'GET':
-            $response = $apiController->doAction('GET', $action, $_GET);
-            break;
         case 'POST':
             $requestBody = json_decode(file_get_contents('php://input'), true) or die("Could not decode json");
             $response = $apiController->doAction('POST', $action, $requestBody);
