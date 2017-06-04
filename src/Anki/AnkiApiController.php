@@ -189,12 +189,24 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $speechResponse;
     }
 
+    private function getEaseFromAnswer($answer) : int
+    {
+        switch (strtolower($answer)) {
+            case 'easy':
+                return 3;
+            case 'medium':
+                return 2;
+            case 'hard':
+                return 1;
+        }
+    }
+
     public function answerCard(string $collectionName, string $cardID, string $answer) : SpeechResponse
     {
         $url = "collection/{$collectionName}/answer_card";
         $requestData = [
             'id' => $cardID,
-            'ease' => $answer
+            'ease' => $this->getEaseFromAnswer($answer)
         ];
 
         $response = $this->getResponseData($url, $requestData);
