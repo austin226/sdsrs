@@ -41,7 +41,7 @@ class AnkiApiController implements AnkiApiControllerInterface
         $requestData = [
             'name' => $deckName,
             'count' => $count,
-            'mode' => $random
+            'mode' => 'random'
         ];
 
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
