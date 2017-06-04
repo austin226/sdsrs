@@ -130,8 +130,10 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         }
         $this->logger->debug("Parsed answer buttons: ".json_encode($answerButtons));
 
+        $cardID = $cardDataArray['id'];
+
         $cardDataOutput = [
-            'id' => $cardDataArray['id'],
+            'id' => $cardID,
             'question' => $question,
             'answer' => $answer,
             'answer_buttons' => $answerButtons,
@@ -140,7 +142,10 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         $contextOut = [
             'name' => 'cardData',
             'lifespan' => 2,
-            'parameters' => $cardDataOutput
+            'parameters' => [
+                'id' => $cardID,
+                'answer' => $answer
+            ]
         ];
 
         $outputSpeech = $question;
