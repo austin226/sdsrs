@@ -114,9 +114,11 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         }
 
         $question = $cardDataArray['question'];
+        $this->logger->debug("Parsed question: $question");
 
         // Parse answer
         $answer = $this->parseAnswer($cardDataArray['answer']);
+        $this->logger->debug("Parsed answer: $answer");
 
         // Parse answer buttons
         $answerButtons = [];
@@ -126,6 +128,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
                 'label' => $answerButton['string_label']
             ];
         }
+        $this->logger->debug("Parsed answer buttons: ".json_encode($answerButtons));
 
         $cardDataOutput = [
             'id' => $cardDataArray['id'],
