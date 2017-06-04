@@ -33,24 +33,27 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         $this->logger = $logger;
     }
 
-    private function getResponseData(string $url, array $requestData = []) : array
+    private function getResponseData(string $url, ?array $requestData = null) : array
     {
         $this->logger->debug("Making request to $url with data ".json_encode($requestData));
         try {
-            $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+            if (isset($requestData)) {
+                $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+            } else {
+                $response = $this->ankiServerClient->post($url);
+            }
         } catch (TransferException $e) {
             $this->logger->error("Anki responded with error");
             throw new HttpException($e->getResponse()->getBody()->getContents(), $e->getCode());
         }
         $responseBody = $response->getBody();
-        $this->logger->debug("Response body: ".json_encode($responseBody));
-        return $responseBody;
+        $this->logger->debug("Response body: $responseBody");
+        return json_decode($responseBody, true);
     }
 
     public function listCollections() : SpeechResponse
     {
-        $responseBody = $this->getResponseData('list_collections');
-        $collectionList = json_decode($responseBody, true);
+        $collectionList = $this->getResponseData('list_collections');
         $collectionList = array_map('urldecode', $collectionList);
 
         $outputSpeech = "You have the following collections: ";
@@ -73,7 +76,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             'mode' => 'random'
         ];
 
-        $responseBody = $this->getResponseData($url, $requestData);
+        $responseData = $this->getResponseData($url, $requestData);
 
         $outputSpeech = "Deck created in $collectionName with name $deckName";
         $speechResponse = new SpeechResponse(
@@ -87,9 +90,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
     public function listDecks(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/list_decks";
-        $response = $this->ankiServerClient->post($url, ['json' => []]);
-        $responseBody = $response->getBody();
-        $deckDataArray = json_decode($responseBody, true);
+        $deckDataArray = $this->getResponseData($url, []);
 
         $deckList = [];
         foreach ($deckDataArray as $deckData) {
@@ -117,7 +118,7 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
                 'Back' => $back
             ]
         ];
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        $responseData = $this->getResponseData($url, $requestData);
 
         $outputSpeech = "Card added to $collectionName";
         $speechResponse = new SpeechResponse(
