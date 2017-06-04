@@ -14,17 +14,6 @@ interface AnkiApiControllerInterface
     public function listCollections() : SpeechResponse;
 
     /**
-     * Lists all decks in a collection. Throws a ResourceNotFoundException
-     * if collection is not found.
-     *
-     * @param string $collectionName
-     *
-     * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
-     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
-     */
-    public function listDecks(string $collectionName) : SpeechResponse;
-
-    /**
      * Creates a card with the given front and back content. Returns
      * the ID of the new card.
      *
@@ -33,7 +22,7 @@ interface AnkiApiControllerInterface
      * @param string $back
      *
      * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
-     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
      */
     public function addCard(string $collectionName, string $front, string $back) : SpeechResponse;
 
@@ -41,23 +30,21 @@ interface AnkiApiControllerInterface
      * Reads out the next card in the deck, or [] if the end of the deck was reached.
      *
      * @param string $collectionName
-     * @param string $deckName
      *
      * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
-     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
      */
-    public function nextCard(string $collectionName, string $deckName) : SpeechResponse;
+    public function nextCard(string $collectionName) : SpeechResponse;
 
     /**
      * Resets the scheduler, returning an array representing how many cards are left now.
      *
      * @param string $collectionName
-     * @param string $deckName
      *
      * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
-     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
      */
-    public function resetScheduler(string $collectionName, string $deckName) : SpeechResponse;
+    public function resetScheduler(string $collectionName) : SpeechResponse;
 
     /**
      * @param string $collectionName
@@ -65,7 +52,7 @@ interface AnkiApiControllerInterface
      * @param string $answer
      *
      * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
-     * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
+     * @throws \Aalmond\Sdsrs\Exceptions\HttpException
      */
     public function answerCard(string $collectionName, string $cardID, string $answer) : SpeechResponse;
 }

@@ -70,47 +70,6 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $speechResponse;
     }
 
-    public function createDeck(string $collectionName, string $deckName, string $count) : SpeechResponse
-    {
-        $url = "collection/{$collectionName}/create_dynamic_deck";
-        $requestData = [
-            'name' => $deckName,
-            'count' => intval($count),
-            'mode' => 'random'
-        ];
-
-        $responseData = $this->getResponseData($url, $requestData);
-
-        $outputSpeech = "Deck created in $collectionName with name $deckName";
-        $speechResponse = new SpeechResponse(
-            $outputSpeech,
-            $outputSpeech,
-            ['deckData' => $responseBody]
-        );
-        return $speechResponse;
-    }
-
-    public function listDecks(string $collectionName) : SpeechResponse
-    {
-        $url = "collection/{$collectionName}/list_decks";
-        $deckDataArray = $this->getResponseData($url, []);
-
-        $deckList = [];
-        foreach ($deckDataArray as $deckData) {
-            $deckList[] = $deckData['name'];
-        }
-
-        $outputSpeech = "You have the following decks in $collectionName: ";
-        $outputSpeech .= implode(', ', $deckList);
-
-        $speechResponse = new SpeechResponse(
-            $outputSpeech,
-            $outputSpeech,
-            ['collection' => $collectionName, 'decks' => $deckList]
-        );
-        return $speechResponse;
-    }
-
     public function addCard(string $collectionName, string $front, string $back) : SpeechResponse
     {
         $url = "collection/{$collectionName}/add_note";
@@ -144,10 +103,10 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         return $matches[2];
     }
 
-    public function nextCard(string $collectionName, string $deckName) : SpeechResponse
+    public function nextCard(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/next_card";
-        $requestData = ['deck' => $deckName];
+        $requestData = ['deck' => 'Default'];
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
         $responseBody = $response->getBody();
 
@@ -178,21 +137,25 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         ];
     }
 
-    public function resetScheduler(string $collectionName, string $deckName) : SpeechResponse
+    public function resetScheduler(string $collectionName) : SpeechResponse
     {
         $url = "collection/{$collectionName}/reset_scheduler";
-        $requestData = ['deck' => $deckName];
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
-        $schedulerDataArray = json_decode($responseBody, true);
+        $requestData = ['deck' => 'Default'];
+        $schedulerDataArray = $this->getResponseData($url, $requestData);
 
-        return [
-            'cards' => [
-                'review' => $schedulerDataArray['review_cards'],
-                'learning' => $schedulerDataArray['learning_cards'],
-                'new' => $schedulerDataArray['new_cards']
-            ]
+        $numCards = [
+            'review' => $schedulerDataArray['review_cards'],
+            'learning' => $schedulerDataArray['learning_cards'],
+            'new' => $schedulerDataArray['new_cards']
         ];
+        $outputSpeech = "Reset scheduler for $collectionName. You have {$numCards['new']} new cards.";
+
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            ['numCards' => $numCards]
+        );
+        return $speechResponse;
     }
 
     public function answerCard(string $collectionName, string $cardID, string $answer) : SpeechResponse

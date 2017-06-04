@@ -24,20 +24,6 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
             'function' => 'listCollections',
             'parameters' => []
         ],
-        'create_deck' => [
-            'function' => 'createDeck',
-            'parameters' => [
-                'collection',
-                'deck_name',
-                'num_cards'
-            ]
-        ],
-        'list_decks' => [
-            'function' => 'listDecks',
-            'parameters' => [
-                'collection'
-            ]
-        ],
         'add_card' => [
             'function' => 'addCard',
             'parameters' => [
@@ -50,14 +36,12 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
             'function' => 'nextCard',
             'parameters' => [
                 'collection',
-                'deck'
             ]
         ],
         'reset_scheduler' => [
             'function' => 'resetScheduler',
             'parameters' => [
                 'collection',
-                'deck'
             ]
         ],
         'answer_card' => [
