@@ -6,10 +6,18 @@ use Aalmond\Sdsrs\Anki\AnkiApiControllerInterface;
 use Aalmond\Sdsrs\ApiAi\SpeechResponse;
 use Aalmond\Sdsrs\Exceptions\BadRequestException;
 use Aalmond\Sdsrs\Exceptions\MethodNotAllowedException;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class ApiController implements ApiControllerInterface
+class ApiController implements ApiControllerInterface, LoggerAwareInterface
 {
     private $ankiController;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     const ACTIONS_LIST = [
         'list_collections' => [
@@ -58,6 +66,12 @@ class ApiController implements ApiControllerInterface
     public function __construct(AnkiApiControllerInterface $ankiController)
     {
         $this->ankiController = $ankiController;
+        $this->setLogger(new NullLogger());
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     /**
