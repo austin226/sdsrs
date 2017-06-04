@@ -106,8 +106,9 @@ class ApiController implements ApiControllerInterface
      */
     private function extractParameter(array $requestData, string $paramName) : string
     {
-        if (isset($requestData[$paramName])) {
-            return $requestData[$paramName];
+        $requestParameters = $requestData['result']['parameters'];
+        if (isset($requestParameters[$paramName])) {
+            return $requestParameters[$paramName];
         }
 
         throw new BadRequestException("Parameter '$paramName' is missing.");
