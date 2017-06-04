@@ -13,7 +13,7 @@ use Aalmond\Sdsrs\Logging\FileAppendingLogger;
 $config = json_decode(file_get_contents('api_config.json'), true);
 $ankiServerUri = $config['uri'];
 $ankiApiController = new AnkiApiController($ankiServerUri);
-$logger = new FileAppendingLogger('log/debug.log');
+$logger = new FileAppendingLogger(__DIR__.'/log/debug.log');
 $apiController = new ApiController($ankiApiController);
 $apiController->setLogger($logger);
 $jsonPrinter = new JsonPrinter();
