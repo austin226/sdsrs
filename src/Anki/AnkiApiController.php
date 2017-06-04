@@ -46,8 +46,11 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             $this->logger->error("Anki responded with error");
             throw new HttpException($e->getResponse()->getBody()->getContents(), $e->getCode());
         }
-        $responseBody = $response->getBody();
+        $responseBody = trim($response->getBody());
         $this->logger->debug("Response body: $responseBody");
+        if (empty($responseBody)) {
+            return [];
+        }
         return json_decode($responseBody, true);
     }
 
