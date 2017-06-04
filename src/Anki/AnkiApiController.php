@@ -148,7 +148,8 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
                 'name' => 'cardData',
                 'lifespan' => 2,
                 'parameters' => [
-                    'id' => "$cardID",
+                    'id' => $cardID,
+                    'question' => $question,
                     'answer' => $answer
                 ]
             ]
@@ -196,12 +197,14 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
             'ease' => $answer
         ];
 
-        $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
-        $responseBody = $response->getBody();
-        $responseDataArray = json_decode($responseBody, true);
+        $response = $this->getResponseData($url, $requestData);
 
-        return [
-            'response' => $responseDataArray
-        ];
+        $outputSpeech = "Answer recorded. Say 'next card' for your next card.";
+        $speechResponse = new SpeechResponse(
+            $outputSpeech,
+            $outputSpeech,
+            []
+        );
+        return $speechResponse;
     }
 }
