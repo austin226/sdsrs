@@ -59,8 +59,12 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         $collectionList = $this->getResponseData('list_collections');
         $collectionList = array_map('urldecode', $collectionList);
 
-        $outputSpeech = "You have the following collections: ";
-        $outputSpeech .= implode(', ', $collectionList);
+        if (empty($collectionList)) {
+            $outputSpeech = "No collections found. You can create one by saying 'Use collection' followed by a name.";
+        } else {
+            $outputSpeech = "You have the following collections: ";
+            $outputSpeech .= implode(', ', $collectionList);
+        }
 
         $speechResponse = new SpeechResponse(
             $outputSpeech,
