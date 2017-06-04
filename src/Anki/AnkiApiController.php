@@ -140,11 +140,13 @@ class AnkiApiController implements AnkiApiControllerInterface, LoggerAwareInterf
         ];
 
         $contextOut = [
-            'name' => 'cardData',
-            'lifespan' => 2,
-            'parameters' => [
-                'id' => $cardID,
-                'answer' => $answer
+            [
+                'name' => 'cardData',
+                'lifespan' => 2,
+                'parameters' => [
+                    'id' => "$cardID",
+                    'answer' => $answer
+                ]
             ]
         ];
 
