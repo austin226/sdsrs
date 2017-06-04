@@ -29,7 +29,7 @@ try {
     }
 } catch (HttpException $e) {
     $logger->error("Received exception: ".$e->getMessage(), ['code' => $e->getCode()]);
-    $jsonPrinter->sendAsJson($e->getMessage(), $e->getCode());
+    //$jsonPrinter->sendAsJson($e->getMessage(), $e->getCode());
     exit();
 }
 
