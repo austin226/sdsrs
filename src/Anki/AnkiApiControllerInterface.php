@@ -19,7 +19,7 @@ interface AnkiApiControllerInterface
      *
      * @param string $collectionName
      *
-     * @return array
+     * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function listDecks(string $collectionName) : SpeechResponse;
@@ -32,7 +32,7 @@ interface AnkiApiControllerInterface
      * @param string $front
      * @param string $back
      *
-     * @return int
+     * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function addCard(string $collectionName, string $front, string $back) : SpeechResponse;
@@ -43,7 +43,7 @@ interface AnkiApiControllerInterface
      * @param string $collectionName
      * @param string $deckName
      *
-     * @return array
+     * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function nextCard(string $collectionName, string $deckName) : SpeechResponse;
@@ -54,7 +54,7 @@ interface AnkiApiControllerInterface
      * @param string $collectionName
      * @param string $deckName
      *
-     * @return array
+     * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function resetScheduler(string $collectionName, string $deckName) : SpeechResponse;
@@ -64,7 +64,7 @@ interface AnkiApiControllerInterface
      * @param string $cardID
      * @param string $answer
      *
-     * @return array
+     * @return \Aalmond\Sdsrs\ApiAi\SpeechResponse
      * @throws \Aalmond\Sdsrs\Exceptions\ResourceNotFoundException
      */
     public function answerCard(string $collectionName, string $cardID, string $answer) : SpeechResponse;
