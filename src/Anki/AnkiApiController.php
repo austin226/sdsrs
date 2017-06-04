@@ -45,12 +45,13 @@ class AnkiApiController implements AnkiApiControllerInterface
         ];
 
         $response = $this->ankiServerClient->post($url, ['json' => $requestData]);
+        $responseBody = $response->getBody();
 
         $outputSpeech = "Deck created in $collectionName with name $deckName";
         $speechResponse = new SpeechResponse(
             $outputSpeech,
             $outputSpeech,
-            []
+            ['deckData' => $responseBody]
         );
         return $speechResponse;
     }
