@@ -48,8 +48,8 @@ class ApiController implements ApiControllerInterface, LoggerAwareInterface
             'function' => 'answerCard',
             'parameters' => [
                 'collection',
-                'cardID',
-                'answer'
+                'card_id',
+                'answer_ease'
             ]
         ]
         // TODO others
