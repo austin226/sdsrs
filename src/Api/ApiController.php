@@ -77,7 +77,7 @@ class ApiController implements ApiControllerInterface
         return json_decode(json_encode($speechResponse), true);
     }
 
-    private function doAction(string $action, array $requestData) : array
+    private function doAction(string $action, array $requestData) : SpeechResponse
     {
         if (!isset(self::ACTIONS_LIST[$action])) {
             throw new BadRequestException("Unknown action: '$action'");
