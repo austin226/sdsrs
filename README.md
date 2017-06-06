@@ -1,7 +1,7 @@
 # sdsrs
 Spoken Dialog Spaced-Repetition System
 
-This is the front-end client, designed for use with [sdsrs-anki-server](https://github.com/austin226/sdsrs-anki-server) which in turn uses [anki-sync-server](https://github.com/dsnopek/anki-sync-server).
+This server is designed for use with [sdsrs-anki-server](https://github.com/austin226/sdsrs-anki-server) which in turn uses [anki-sync-server](https://github.com/dsnopek/anki-sync-server). It responds to intents from api.ai. (TODO link to it)
 
 # Config
 ## Server Configuration
@@ -11,12 +11,17 @@ You need to input an sdsrs-anki-server base URI (IP and port) into a file called
 This repository uses [Composer](https://getcomposer.org/) for dependency management. You must install the composer dependencies by calling `composer install` from within the project's base directory.
 
 # API
-| action | method | example URL | data | success response | failure response |
-|--------|--------|-------------|------|------------------|------------------|
-| `list_collections` | GET | `api.php?action=list_collections`  | | 200 | |
-| `list_decks` | GET | `api.php?action=list_decks&collection={$collectionName}` | | 200 | 404 |
-| `create_deck` | POST | `api.php?action=create_deck` | `{"collection": "collection1", "name": "deck1"}` | 201 | 404,422 |
-| `add_card` |   POST | `api.php?action=add_card` | `{"collection": "collection1", "deck1", "front": "front1", "back": "back1"}` | 201 | `{"card_name": "card1"}` | 404,422 |
-| `next_card` | POST | `api.php?action=next_card` | `{"collection": "collection1", "deck": "deck1"}` | 200 | 404 |
-| `reset_scheduler` | POST | `api.php?action=reset_scheduler` | `{"collection": "collection1", "deck": "deck1"}` | 200 | 404 |
-| `answer_card` | POST | `api.php?action=answer_card` | `{"collection": "collection1", "cardID": "1235324", "answer": "2"}` | 200 | 404,422 |
+The API expects calls from an <a href="https://docs.api.ai/docs/webhook">api.ai Webhook</a>.
+* <a href="https://docs.api.ai/docs/webhook#section-format-of-request-to-the-service">Format of Request to the Service</a>
+* <a href="https://docs.api.ai/docs/webhook#section-format-of-response-from-the-service">Format of Response to the Service</a>
+
+## Valid requests
+The following requests formatted in api.ai style are valid:
+
+| intent                | parameters                                |
+|-----------------------|-------------------------------------------|
+| `list_collections`    | None                                      |
+| `add_card`            | `collection`, `front`, `back`             |
+| `next_card`           | `collection`                              |
+| `reset_scheduler`     | `collection`                              |
+| `answer_card`         | `collection`, `card_id`, `answer_ease`    |
