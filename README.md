@@ -1,7 +1,7 @@
 # sdsrs
 Spoken Dialog Spaced-Repetition System
 
-This server is designed for use with [sdsrs-anki-server](https://github.com/austin226/sdsrs-anki-server) which in turn uses [anki-sync-server](https://github.com/dsnopek/anki-sync-server). It responds to intents from api.ai. (TODO link to it)
+This server is designed for use with [sdsrs-anki-server](https://github.com/austin226/sdsrs-anki-server) which in turn uses [anki-sync-server](https://github.com/dsnopek/anki-sync-server). It responds to intents from [sdsrs-api.ai](https://github.com/austin226/sdsrs-api.ai).
 
 # Config
 ## Server Configuration
