@@ -16,7 +16,7 @@ The API expects calls from an <a href="https://docs.api.ai/docs/webhook">api.ai 
 * <a href="https://docs.api.ai/docs/webhook#section-format-of-response-from-the-service">Format of Response to the Service</a>
 
 ## Valid requests
-The following requests formatted in api.ai style are valid:
+The following POST requests formatted in <a href="https://docs.api.ai/docs/webhook#section-format-of-request-to-the-service">api.ai style</a> are valid:
 
 | intent                | parameters                                |
 |-----------------------|-------------------------------------------|
